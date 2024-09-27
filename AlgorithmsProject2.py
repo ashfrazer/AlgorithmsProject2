@@ -4,6 +4,7 @@ import random
 def bubble_sort(data):
     """ Enter function info """
     print("Bubble sort is running...")
+    print("")
     # Continue
     
 def merge_sort(data):
@@ -23,7 +24,7 @@ def tim_sort(data):
     print("Tim sort is running...")
     print("")
     # Continue
-    
+     
 # Generates data and runs sorting function
 def gen_data(sort_function, size, complexity_selection):
     """ Enter function info """
@@ -36,16 +37,15 @@ def gen_data(sort_function, size, complexity_selection):
     else:
         raise ValueError("Invalid selection!")
         
-    # Make a copy of the data so that original date is not modified by
-    #   sorting algorithms
-    unsorted_data = data.copy()
+    # Make a copy to avoid modifying original data
+    sorted_data = data.copy()
 
     print(f"Running {sort_function.__name__} on data of size {size}...)")
     print("")
 
     # Record time taken to sort data
     start_time = time.time()
-    sort_function(unsorted_data) # Sorting the UNSORTED data (copy)
+    sort_function(sorted_data)
     end_time = time.time()
     
     # Display time taken to sort data
@@ -53,8 +53,25 @@ def gen_data(sort_function, size, complexity_selection):
     print("")
     print("-" * 10)
 
+def test_sorting_function(sort_function, data):
+    """ Test the sorting function on a dataset of 10. """
+    print("-" * 20)
+    print(f"Testing {sort_function.__name__} on small dataset...")
+    print("")
+    
+    # Print unsorted data
+    print(f"Unsorted Data: {data}")
+    print("")
+    
+    # Make a copy to avoid modifying original data
+    sorted_data = data.copy()
+    sort_function(sorted_data)
+    
+    print(f"Sorted Data: {sorted_data}")
+    print("-" * 20)
+    
 def main():
-    """ Enter function info """
+    """ Main driver program. """
     # Welcome Menu
     print("Welcome to the test suite of selected sorting algorithms!")
     print("")
@@ -98,6 +115,11 @@ def main():
         
         if sort_selection not in sorting_algorithms:
             raise ValueError("Invalid selection!")
+    
+        # Test sorting function on dataset of 10 numbers
+        small_dataset = [random.randint(1,100) for x in range(10)]
+        test_sorting_function(sorting_algorithms[sort_selection],
+                              small_dataset)
     
         # Prompt user for case scenario selection
         print(f"Case Scenarios for {sorting_algorithms[sort_selection].__name__}")
