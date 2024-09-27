@@ -94,27 +94,31 @@ def main():
     
     while True:
         # Prompt user for sorting algorithm selection
-        print("Select the sorting algorithm you want to test.")
-        print ("-" * 25)
-        
-        # Display sorting algorithms
-        for key, sort_function in sorting_algorithms.items():
-            if sort_function:
-                print(f"{key}. {sort_function.__name__}")
-            else:
-                print(f"{key}. Exit")
-        print("")
-        
-        sort_selection = input("Select a sorting algorithm (1-5): ")
-        
-        # Exit program
-        if sort_selection == '5':
-            print("Exiting program.")
+        while True:
+            print("Select the sorting algorithm you want to test.")
+            print ("-" * 25)
+            
+            # Display sorting algorithms
+            for key, sort_function in sorting_algorithms.items():
+                if sort_function:
+                    print(f"{key}. {sort_function.__name__}")
+                else:
+                    print(f"{key}. Exit")
             print("")
-            break
-        
-        if sort_selection not in sorting_algorithms:
-            raise ValueError("Invalid selection!")
+            
+            sort_selection = input("Select a sorting algorithm (1-5): ")
+            print("")
+            
+            if sort_selection in sorting_algorithms:
+                # Exit program
+                if sort_selection == '5':
+                    print("Exiting program.")
+                    print("")
+                    return
+                break
+            else:
+                print("Invalid selection!")
+                print("")
     
         # Test sorting function on dataset of 10 numbers
         small_dataset = [random.randint(1,100) for x in range(10)]
@@ -122,29 +126,30 @@ def main():
                               small_dataset)
     
         # Prompt user for case scenario selection
-        print(f"Case Scenarios for {sorting_algorithms[sort_selection].__name__}")
-        print("-" * 15)
-    
-        # Display time complexity options
-        for key, complexity in complexity_options.items():
-            print(f"{key}. {complexity}")
-        print("")    
+        while True:
+            print(f"Case Scenarios for {sorting_algorithms[sort_selection].__name__}")
+            print("-" * 15)
         
-        complexity_selection = input("Select the case (1-4): ")
-    
-        # Exit program
-        if complexity_selection == '4':
-            print("Exiting case selection.")
-            print("")
-            continue
+            # Display time complexity options
+            for key, complexity in complexity_options.items():
+                print(f"{key}. {complexity}")
+            print("")    
             
-        if complexity_selection not in complexity_options:
-            raise ValueError("Invalid selection!")
+            complexity_selection = input("Select the case (1-4): ")
             print("")
         
-        # Sort data in sets of 100, 1000, 10000, and 100000
-        for size in [100, 1000, 10000, 100000]:
-            gen_data(sorting_algorithms[sort_selection], size,
-                     complexity_selection)
+            # Exit program
+            if complexity_selection == '4':
+                print("Exiting case selection.")
+                print("")
+                break
+            elif complexity_selection in complexity_options:
+                # Sort data in sets of 100, 1000, 10000, and 100000
+                for size in [100, 1000, 10000, 100000]:
+                    gen_data(sorting_algorithms[sort_selection], size,
+                             complexity_selection)
+            else:
+                print("Invalid selection!")
+                print("")
     
 main()
