@@ -89,7 +89,7 @@ def main():
         '1' : 'Best Case',
         '2' : 'Average Case',
         '3' : 'Worst Case',
-        '4' : 'Exit quick sort test'
+        '4' : 'Exit test'
         }
     
     while True:
@@ -148,8 +148,10 @@ def main():
                 for size in [100, 1000, 10000, 100000]:
                     gen_data(sorting_algorithms[sort_selection], size,
                              complexity_selection)
+                break
             else:
                 print("Invalid selection!")
                 print("")
+        
     
 main()
