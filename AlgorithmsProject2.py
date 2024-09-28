@@ -15,8 +15,6 @@ def bubble_sort(data):
             if not swap:
                 sorted = True
                 break
-    print("Bubble sort is running...")
-    print("")
     return data
     # Continue
     
@@ -105,7 +103,7 @@ def gen_data(sort_function, size, complexity_selection):
     end_time = time.time()
     
     # Display time taken to sort data
-    print(f"{sort_function.__name__}: {end_time - start_time:.4f} seconds")
+    print(f"{sort_function.__name__}: {end_time - start_time:.6f} seconds")
     print("")
     print("-" * 10)
 
