@@ -54,6 +54,28 @@ Select a sorting algorithm (1-5): 5
 Bye!
 
 
+
+# Record time taken to sort data
+start_time = time.time()
+sort_function(sorted_data)
+end_time = time.time()
+
+"""
+"""    
+# average case
+if complexity_selection == '2':
+    #alskdjfhalskdjhf
+    gen_data(size, complexity_selection)
+# worse case
+if complexity_selection == '3':
+    #as;dflkasdf
+    gen_data(size, complexity_selection)
+# Exit program
+if complexity_selection == '4':
+    print("Exiting case selection.")
+    print("")
+    break
+
 """
 
 import time
@@ -63,6 +85,7 @@ def bubble_sort(data):
     # bubble sort loops through the list and pushes the biggest number to the top
     # it does this a number of times equal to the size of the list -1 
     sorted = False
+    start_time = time.time()
     for i in range(len(data)-1):
         swap = False
         if not sorted:
@@ -73,9 +96,9 @@ def bubble_sort(data):
             if not swap:
                 sorted = True
                 break
-    print("Bubble sort is running...")
-    print("")
-    return data
+    end_time = time.time()
+    time_taken = end_time - start_time
+    return time_taken, data
     # Continue
     
 def merge_sort(data):
@@ -124,6 +147,7 @@ def quick_sort(data):
     #quick sort choses a pivot point then puts all smaller numbers to the left
     #and all larger numbers to the right. it recursively does this until every
     #number has been a pivot and the entire list in sorted
+    
     if len(data) <= 1:
         return data
     pivot = data[len(data) // 2]
@@ -139,9 +163,21 @@ def tim_sort(data):
     print("")
     # Continue
      
+"""
+Suggestion from Jon - make gen_data its own function 
+and run the sort inside of main on the generated data 
+instead of inside of gen_data. Will make implementation
+easier to do and follow.
+
+Record the time taken to run the sort in the same function as
+the sorting algorithm instead of a seperate function
+
+"""
+
 # Generates data and runs sorting function
-def gen_data(sort_function, size, complexity_selection):
+def gen_data(size, complexity_selection):
     """ Enter function info """
+    data = []
     if complexity_selection == '1': # Best case
         data = [i for i in range(size)]
     elif complexity_selection == '2': # Average case
@@ -150,22 +186,10 @@ def gen_data(sort_function, size, complexity_selection):
         data = [i for i in range(size, 0, -1)]
     else:
         raise ValueError("Invalid selection!")
-        
+
     # Make a copy to avoid modifying original data
-    sorted_data = data.copy()
-
-    print(f"Running {sort_function.__name__} on data of size {size}...)")
-    print("")
-
-    # Record time taken to sort data
-    start_time = time.time()
-    sort_function(sorted_data)
-    end_time = time.time()
-    
-    # Display time taken to sort data
-    print(f"{sort_function.__name__}: {end_time - start_time:.6f} seconds")
-    print("")
-    print("-" * 10)
+    data_to_sort = data.copy()
+    return data_to_sort
 
 def test_sorting_function(sort_function, data):
     """ Test the sorting function on a dataset of 10. """
@@ -183,6 +207,30 @@ def test_sorting_function(sort_function, data):
     
     print(f"Sorted Data: {new_data}")
     print("-" * 20)
+    
+# this is for debugging purposes only     
+"""
+     # Test sorting function on dataset of 10 numbers
+     small_dataset = [random.randint(1,100) for x in range(10)]
+     test_sorting_function(sorting_algorithms[sort_selection],
+                           small_dataset)
+"""
+"""
+    this is what will record the time taken to run the sorts and display information.
+    we will be moving this into the sorting functions themselves rather than inside
+    of the gen_data function.
+    
+    print(f"Running {sort_function.__name__} on data of size {size}...)")
+    print("")
+    
+    
+    
+    # Display time taken to sort data
+    print(f"{sort_function.__name__}: {end_time - start_time:.6f} seconds")
+    print("")
+    print("-" * 10)
+    
+"""   
     
 def main():
     """ Main driver program. """
@@ -233,11 +281,10 @@ def main():
             else:
                 print("Invalid selection!")
                 print("")
-    
-        # Test sorting function on dataset of 10 numbers
-        small_dataset = [random.randint(1,100) for x in range(10)]
-        test_sorting_function(sorting_algorithms[sort_selection],
-                              small_dataset)
+         
+        # for case selection, data must first be generated based upon the user's
+        # case selection. Then the sorting algorithm ran on 100, 1000, and 10000.
+        
     
         # Prompt user for case scenario selection
         while True:
@@ -251,20 +298,49 @@ def main():
             
             complexity_selection = input("Select the case (1-4): ")
             print("")
-        
-            # Exit program
-            if complexity_selection == '4':
+            
+            # complexity options is another dictionary defined at top of main
+            
+            # best case
+            if complexity_selection == '1' or '2' or '3':
+                
+                unsorted_data = gen_data(100, complexity_selection)
+                time_to_display, sorted_data = bubble_sort(unsorted_data)
+                print(f"For N = 100,     it takes {time_to_display:.6f} seconds")
+                
+                unsorted_data = []
+                unsorted_data = gen_data(1000, complexity_selection)
+                time_to_display, sorted_data = bubble_sort(unsorted_data)
+                print(f"For N = 1000,    it takes {time_to_display:.6f} seconds")
+                
+                unsorted_data = []
+                unsorted_data = gen_data(10000, complexity_selection)
+                time_to_display, sorted_data = bubble_sort(unsorted_data)
+                print(f"For N = 10000,   it takes {time_to_display:.6f} seconds")
+                print("")
+                
+                yes_no = input("Do you want to input another N (Y/N)? ")
+                while (yes_no == "Y"):
+                    new_Size = int(input("What is the N? "))
+                    print("")
+                    unsorted_data = []
+                    unsorted_data = gen_data(new_Size, complexity_selection)
+                    time_to_display, sorted_data = bubble_sort(unsorted_data)
+                    print(f"For N = {new_Size}, it takes {time_to_display:.6f} seconds")
+                    print("")
+                    
+                    yes_no = input("Do you want to input another N (Y/N)?")
+                
+            elif complexity_selection == '4':
                 print("Exiting case selection.")
                 print("")
                 break
-            elif complexity_selection in complexity_options:
-                # Sort data in sets of 100, 1000, 10000, and 100000
-                for size in [100, 1000, 10000, 100000]:
-                    gen_data(sorting_algorithms[sort_selection], size,
-                             complexity_selection)
-                break
+            
             else:
                 print("Invalid selection!")
                 print("")
-         
+           
 main()
+
+
+
