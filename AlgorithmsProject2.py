@@ -1,3 +1,61 @@
+"""
+## THIS IS THE GIVEN SAMPLE I/O FROM THE PROJECT RUBRIC
+
+Welcome to the test suite of selected sorted algorithms!
+
+Select the sorting algorithm you want to test.
+-------------------------
+1. Bubble Sort
+2. Merge Sort
+3. Quick Sort
+4. Heap Sort (replacing this line with the algorithm you choose)
+5. Exit
+Select a sorting algorithm (1-5): 1
+## notice here that the algorithm doesn't run until a case scenario is selected
+Case Scenarios for Bubble Sort
+----------------
+1. Best Case
+2. Average Case
+3. Worst Case
+4. Exit bubble sort test
+
+Select the case (1-4): 1
+
+In best case,
+For N = 100,    it takes 0.000011 seconds
+For N = 1000,   it takes 0.000056 seconds
+For N = 10000,  it takes 0.000583 seconds
+## n being our size
+Do you want to input another N (Y/N)? Y
+What is the N? 100000
+
+For N = 100000, it takes 0.0090347 seconds.
+
+Do you want to input another N (Y/N)? N
+##  back a menu here to selections
+Case Scenarios for Bubble Sort
+----------------
+1. Best Case
+2. Average Case
+3. Worst Case
+4. Exit bubble sort test
+
+Select the case (1-4): 4
+## back to main menu
+Select the sorting algorithm you want to test.
+-------------------------
+1. Bubble Sort
+2. Merge Sort
+3. Quick Sort
+4. Heap Sort (replacing this line with the algorithm you choose)
+5. Exit
+Select a sorting algorithm (1-5): 5
+
+Bye!
+
+
+"""
+
 import time
 import random
 
@@ -15,6 +73,8 @@ def bubble_sort(data):
             if not swap:
                 sorted = True
                 break
+    print("Bubble sort is running...")
+    print("")
     return data
     # Continue
     
@@ -63,7 +123,7 @@ def merge(left, right):
 def quick_sort(data):
     #quick sort choses a pivot point then puts all smaller numbers to the left
     #and all larger numbers to the right. it recursively does this until every
-    #number has been a pivot and the entier list in sorted
+    #number has been a pivot and the entire list in sorted
     if len(data) <= 1:
         return data
     pivot = data[len(data) // 2]
@@ -75,7 +135,7 @@ def quick_sort(data):
 
 def tim_sort(data):
     """ Enter function info """
-    print("Tim sort is running...")
+    print("Timsort is running...")
     print("")
     # Continue
      
