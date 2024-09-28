@@ -10,28 +10,43 @@ def bubble_sort(data):
                 data[j], data[j+1] = data[j+1], data[j]
     print("Bubble sort is running...")
     print("")
+    return data
     # Continue
     
 def merge_sort(data):
     """ Enter function info """
-    dataLength = data.length
-    midIndex = (int)(dataLength/2)
-    leftHalf = []
-    rightHalf = []
 
-    if dataLength < 2:
-        return
+    """Base case"""
+    if len(data) <= 1:
+        return data
 
-    for i in range(midIndex):
-        leftHalf.append(data[i])
+    """Divide here and recurse"""
+    midIndex = len(data)//2
+    leftHalf = data[:midIndex]
+    rightHalf = data[midIndex:]
+       
+    leftHalf = merge_sort(leftHalf)
+    rightHalf = merge_sort(rightHalf)
 
-    for i in range(dataLength - midIndex):
-        rightHalf.append(data[i+midIndex])
-        
+    return list(merge(leftHalf,rightHalf))
 
-    print("Merge sort is running...")
-    print("")
-    # Continue
+def merge(left, right):
+    """merge function here"""
+    result = []
+    leftIndex, rightIndex = 0,0
+    while leftIndex < len(left) and rightIndex < len(right):
+        if left[leftIndex] <= right[rightIndex]:
+            result.append(left[leftIndex])
+            leftIndex += 1
+        else:
+            result.append(right[rightIndex])
+            rightIndex += 1
+    if leftIndex < len(left):
+        result.extend(left[leftIndex:])
+    if rightIndex < len(right):
+        result.extend(right[rightIndex:])
+    return result
+
 
 def quick_sort(data):
     """ Enter function info """
@@ -85,9 +100,9 @@ def test_sorting_function(sort_function, data):
     
     # Make a copy to avoid modifying original data
     sorted_data = data.copy()
-    sort_function(sorted_data)
+    new_data = sort_function(sorted_data)
     
-    print(f"Sorted Data: {sorted_data}")
+    print(f"Sorted Data: {new_data}")
     print("-" * 20)
     
 def main():
