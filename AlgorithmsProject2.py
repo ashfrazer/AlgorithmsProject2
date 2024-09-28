@@ -2,13 +2,33 @@ import time
 import random
 
 def bubble_sort(data):
-    """ Enter function info """
+    # bubble sort loops through the list and pushes the biggest number to the top
+    # it does this a number of times equal to the size of the list -1 
+    for i in range(len(data)-1):
+        for j in range(len(data) - i - 1):
+            if data[j] > data[j+1]:
+                data[j], data[j+1] = data[j+1], data[j]
     print("Bubble sort is running...")
     print("")
     # Continue
     
 def merge_sort(data):
     """ Enter function info """
+    dataLength = data.length
+    midIndex = (int)(dataLength/2)
+    leftHalf = []
+    rightHalf = []
+
+    if dataLength < 2:
+        return
+
+    for i in range(midIndex):
+        leftHalf.append(data[i])
+
+    for i in range(dataLength - midIndex):
+        rightHalf.append(data[i+midIndex])
+        
+
     print("Merge sort is running...")
     print("")
     # Continue
