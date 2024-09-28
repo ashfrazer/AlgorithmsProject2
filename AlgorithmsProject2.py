@@ -23,11 +23,15 @@ def bubble_sort(data):
 def merge_sort(data):
     """ Enter function info """
 
-    """Base case"""
+    # Base case
     if len(data) <= 1:
         return data
 
-    """Divide here and recurse"""
+    # Check if data is already sorted
+    if all(data[i] <= data[i+1] for i in range(len(data)-1)):
+        return data
+    
+    # Divide and recurse
     midIndex = len(data)//2
     leftHalf = data[:midIndex]
     rightHalf = data[midIndex:]
@@ -35,7 +39,11 @@ def merge_sort(data):
     leftHalf = merge_sort(leftHalf)
     rightHalf = merge_sort(rightHalf)
 
-    return list(merge(leftHalf,rightHalf))
+    # Skip merge if largest value in left half is <= smallest value in right
+    if leftHalf[-1] <= rightHalf[0]:
+        return leftHalf + rightHalf
+
+    return merge(leftHalf,rightHalf)
 
 def merge(left, right):
     """merge function here"""
