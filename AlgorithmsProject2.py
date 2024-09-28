@@ -54,13 +54,19 @@ def merge(left, right):
         result.extend(right[rightIndex:])
     return result
 
-
 def quick_sort(data):
-    """ Enter function info """
-    print("Quick sort is running...")
-    print("")
+    #quick sort choses a pivot point then puts all smaller numbers to the left
+    #and all larger numbers to the right. it recursively does this until every
+    #number has been a pivot and the entier list in sorted
+    if len(data) <= 1:
+        return data
+    pivot = data[len(data) // 2]
+    left = [x for x in data if x < pivot]
+    middle = [x for x in data if x == pivot]
+    right = [x for x in data if x > pivot]
+    return quick_sort(left) + middle + quick_sort(right)
     # Continue
-    
+
 def tim_sort(data):
     """ Enter function info """
     print("Tim sort is running...")
@@ -194,6 +200,5 @@ def main():
             else:
                 print("Invalid selection!")
                 print("")
-        
-    
+         
 main()
