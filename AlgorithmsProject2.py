@@ -4,10 +4,17 @@ import random
 def bubble_sort(data):
     # bubble sort loops through the list and pushes the biggest number to the top
     # it does this a number of times equal to the size of the list -1 
+    sorted = False
     for i in range(len(data)-1):
-        for j in range(len(data) - i - 1):
-            if data[j] > data[j+1]:
-                data[j], data[j+1] = data[j+1], data[j]
+        swap = False
+        if not sorted:
+            for j in range(len(data) - i - 1):
+                if data[j] > data[j+1]:
+                    data[j], data[j+1] = data[j+1], data[j]
+                    swap = True
+            if not swap:
+                sorted = True
+                break
     print("Bubble sort is running...")
     print("")
     return data
