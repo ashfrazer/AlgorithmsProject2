@@ -205,11 +205,15 @@ def merge_sort(data):
     start_time = time.time()
     # Base case
     if len(data) <= 1:
-        return data
+        end_time = time.time()
+        time_taken = end_time - start_time
+        return time_taken, data
 
     # Check if data is already sorted
     if all(data[i] <= data[i+1] for i in range(len(data)-1)):
-        return data
+        end_time = time.time()
+        time_taken = end_time - start_time
+        return time_taken, data
     
     # Divide and recurse
     midIndex = len(data)//2
@@ -220,8 +224,11 @@ def merge_sort(data):
     rightHalf = merge_sort(rightHalf)
 
     # Skip merge if largest value in left half is <= smallest value in right
-    if leftHalf[-1] <= rightHalf[0]:
-        return leftHalf + rightHalf
+    if int(leftHalf[-1]) <= int(rightHalf[0]):
+        end_time = time.time()
+        time_taken = end_time - start_time
+        return time_taken, leftHalf + rightHalf
+    
     end_time = time.time()
     time_taken = end_time - start_time
     return time_taken, merge(leftHalf,rightHalf)
@@ -415,7 +422,10 @@ def main():
                 
                 unsorted_data = []
                 unsorted_data = gen_data(1000, complexity_selection)
+                # menu broken because of timers, will implement timers inside of main here, before and after
+                # the sorting algorithms are called. 
                 time_to_display, sorted_data = ((sorting_algorithms[sort_selection])(unsorted_data))
+                
                 print(f"For N = 1000,    it takes {time_to_display:.6f} seconds")
                 
                 unsorted_data = []
