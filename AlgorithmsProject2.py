@@ -145,7 +145,6 @@ def tim_merge(arr, l, m, r):
     
 
 def tim_sort(data): 
-    start_time = time.time()
     n = len(data) 
     minRun = calculate_minRun(n) 
   
@@ -176,15 +175,12 @@ def tim_sort(data):
                 tim_merge(data, left, mid, right) 
   
         size = 2 * size 
-    end_time = time.time()
-    time_taken = end_time - start_time
-    return time_taken, data
+    return data
 
 def bubble_sort(data):
     # bubble sort loops through the list and pushes the biggest number to the top
     # it does this a number of times equal to the size of the list -1 
     sorted = False
-    start_time = time.time()
     for i in range(len(data)-1):
         swap = False
         if not sorted:
@@ -195,25 +191,19 @@ def bubble_sort(data):
             if not swap:
                 sorted = True
                 break
-    end_time = time.time()
-    time_taken = end_time - start_time
-    return time_taken, data
+    
+    return data
     # Continue
     
 def merge_sort(data):
     """ Enter function info """
-    start_time = time.time()
     # Base case
     if len(data) <= 1:
-        end_time = time.time()
-        time_taken = end_time - start_time
-        return time_taken, data
+        return data
 
     # Check if data is already sorted
     if all(data[i] <= data[i+1] for i in range(len(data)-1)):
-        end_time = time.time()
-        time_taken = end_time - start_time
-        return time_taken, data
+        return data
     
     # Divide and recurse
     midIndex = len(data)//2
@@ -225,13 +215,9 @@ def merge_sort(data):
 
     # Skip merge if largest value in left half is <= smallest value in right
     if int(leftHalf[-1]) <= int(rightHalf[0]):
-        end_time = time.time()
-        time_taken = end_time - start_time
-        return time_taken, leftHalf + rightHalf
+        return leftHalf + rightHalf
     
-    end_time = time.time()
-    time_taken = end_time - start_time
-    return time_taken, merge(leftHalf,rightHalf)
+    return merge(leftHalf,rightHalf)
 
 def merge(left, right):
     """merge function here"""
@@ -278,22 +264,22 @@ the sorting algorithm instead of a seperate func1tion
 """
 
 # Generates data and runs sorting function
-def gen_data(size, complexity_selection):
+def gen_data(size, complex_selection):
     """ Enter function info """
-    if (complexity_selection == '1' or '2' or '3'):
+    if (complex_selection == '1' or '2' or '3'):
         data = []
-        if complexity_selection == '1': # Best case
+        if complex_selection == '1': # Best case
             data = [i for i in range(size)]
-        elif complexity_selection == '2': # Average case
-            data = [random.randint(0,size) for x in range(size)]
-        elif complexity_selection == '3': # Worst case
+        elif complex_selection == '2': # Average case
+            # data = [random.randint(0,size) for x in range(size)]
+            for i in range(size):
+                num = random.randint(0, size)
+                data.append(num)
+        elif complex_selection == '3': # Worst case
             data = [i for i in range(size, 0, -1)]
         else:
             raise ValueError("Invalid selection!")
-
-    # Make a copy to avoid modifying original data
-    data_to_sort = data.copy()
-    return data_to_sort
+    return data
 
 def test_sorting_function(sort_function, data):
     """ Test the sorting function on a dataset of 10. """
@@ -400,6 +386,7 @@ def main():
                 print(f"{key}. {complexity}")
             print("")    
             
+            # user selects Best Case, Average Case, or Worst Case
             complexity_selection = input("Select the case (1-4): ")
             print("")
             
@@ -408,29 +395,38 @@ def main():
             if complexity_selection == '4':
                 break
             
-            
-            # bubble_sort
-            # merge_sort
-            # quick_sort
-            # case complexity selection from user
             if complexity_selection == '1' or '2' or '3':
-                # this is a test
-                unsorted_data = gen_data(100, complexity_selection)
-                time_to_display, sorted_data = ((sorting_algorithms[sort_selection])(unsorted_data))
-                # time_to_display, sorted_data = bubble_sort(unsorted_data)
+                sorted_data = []
+                unsorted_data = []
+                # generate unsorted data
+                unsorted_data = gen_data(int(100), complexity_selection)
+                # start timer
+                start_time = time.time()
+                # run algorithm
+                sorted_data = ((sorting_algorithms[sort_selection])(unsorted_data))
+                #end timer
+                end_time = time.time()
+                # time_to_display is how long the algorithm took to run
+                time_to_display = end_time - start_time
                 print(f"For N = 100,     it takes {time_to_display:.6f} seconds")
                 
+                sorted_data = []
                 unsorted_data = []
-                unsorted_data = gen_data(1000, complexity_selection)
-                # menu broken because of timers, will implement timers inside of main here, before and after
-                # the sorting algorithms are called. 
-                time_to_display, sorted_data = ((sorting_algorithms[sort_selection])(unsorted_data))
+                unsorted_data = gen_data(int(1000), complexity_selection)
+                start_time = time.time()
+                sorted_data = ((sorting_algorithms[sort_selection])(unsorted_data))
+                end_time = time.time()
+                time_to_display = end_time - start_time
                 
                 print(f"For N = 1000,    it takes {time_to_display:.6f} seconds")
                 
+                sorted_data = []
                 unsorted_data = []
-                unsorted_data = gen_data(10000, complexity_selection)
-                time_to_display, sorted_data = ((sorting_algorithms[sort_selection])(unsorted_data))
+                unsorted_data = gen_data(int(10000), complexity_selection)
+                start_time = time.time()
+                sorted_data = ((sorting_algorithms[sort_selection])(unsorted_data))
+                end_time = time.time()
+                time_to_display = end_time - start_time
                 print(f"For N = 10000,   it takes {time_to_display:.6f} seconds")
                 print("")
                 
@@ -444,9 +440,13 @@ def main():
                 while (yes_no == "Y"):
                     new_Size = int(input("What is the N? "))
                     print("")
+                    sorted_data = []
                     unsorted_data = []
                     unsorted_data = gen_data(new_Size, complexity_selection)
-                    time_to_display, sorted_data = ((sorting_algorithms[sort_selection])(unsorted_data))
+                    start_time = time.time()
+                    sorted_data = ((sorting_algorithms[sort_selection])(unsorted_data))
+                    end_time = time.time()
+                    time_to_display = end_time - start_time
                     print(f"For N = {new_Size}, it takes {time_to_display:.6f} seconds")
                     print("")
                     
