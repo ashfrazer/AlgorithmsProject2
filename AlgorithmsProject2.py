@@ -79,7 +79,8 @@ def tim_merge(data, l, m, r):
 
 def tim_sort(data):
     """
-    Sorts a list using the TimSort algorithm, a hybrid sorting algorithm derived from merge_sort and insertion sort.
+    Sorts a list using the TimSort algorithm, a hybrid sorting algorithm derived from 
+    a combination of merge_sort and insertion sort.
     Args:
         data: The list of elements to be sorted.
     Returns:
@@ -310,8 +311,13 @@ def main():
             print(f"\nCase Scenarios for {sorting_algorithms[sort_choice].__name__}")
             print("-" * 15)
             for key, complexity in complexity_options.items():
-                print(f"{key}. {complexity}")
+                if complexity != 'Exit': 
+                    print(f"{key}. {complexity}")
+                else:
+                    print(f"{key}. Exit {sorting_algorithms[sort_choice].__name__} test")
+            print("")
             complexity_selection = input("Select the case (1-4): ")
+            print("")
             if complexity_selection not in complexity_options:
                 print("Invalid selection!")
                 continue
@@ -327,15 +333,16 @@ def main():
                 # Measure time taken to sort
                 time_taken = measure_sort_time(sorting_algorithms[sort_choice], data.copy())
                 print(f"For N = {size}, it takes {time_taken:.6f} seconds.")
-
+            print("")
             # Prompt user for another size
             while True:
                 new_size = input("Do you want to input another N (Y/N)? ").lower()
                 if new_size == 'y':
                     custom_size = int(input("What is the N? "))
+                    print("")
                     data = gen_data(custom_size, complexity_selection)
                     time_taken = measure_sort_time(sorting_algorithms[sort_choice], data.copy())
-                    print(f"For N = {custom_size}, it takes {time_taken:.6f} seconds.")
+                    print(f"For N = {custom_size}, it takes {time_taken:.6f} seconds.\n")
                 else:
                     break
 
